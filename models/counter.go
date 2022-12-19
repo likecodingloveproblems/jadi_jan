@@ -9,9 +9,12 @@ type Counter struct {
 	Count uint64
 }
 
+var UpdatedCounter uint64
+
 func (c *Counter) Incr(ctx context.Context) {
 	count := redisStore.db.Incr(ctx, "counter").Val()
 	c.Count = uint64(count)
+	UpdatedCounter = c.Count
 }
 
 func (c *Counter) Get(ctx context.Context) {
